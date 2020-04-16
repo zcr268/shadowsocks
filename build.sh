@@ -15,5 +15,5 @@ rm -rf shadowsocks
 scp -P 22 shadowsocks.tar.gz version admin@192.168.50.110:/volume1/docker/nginx/home/
 
 git add .
-git commit -m "${file_name} ${md5}"
+git commit -m "${file_name} ${md5} $1"
 git push
