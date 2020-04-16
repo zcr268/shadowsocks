@@ -12,7 +12,7 @@ rm version_bak
 cp ${file_name} shadowsocks.tar.gz
 rm -rf shadowsocks
 
-scp shadowsocks.tar.gz version admin@192.168.50.110:/volume1/docker/nginx/home/
+scp -P 22 shadowsocks.tar.gz version admin@192.168.50.110:/volume1/docker/nginx/home/
 
 git add .
 git commit -m "${file_name} ${md5}"
