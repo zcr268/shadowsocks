@@ -12,6 +12,8 @@ cat version_bak >> version
 rm version_bak
 cp ${file_name} shadowsocks.tar.gz
 rm -rf shadowsocks
+
+git status
 echo -n "提交信息:"
 msg=`read`
 # if false; then
