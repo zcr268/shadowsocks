@@ -15,7 +15,8 @@ rm -rf shadowsocks
 
 git status
 echo -n "提交信息:"
-msg=`read`
+read msg
+
 # if false; then
     scp -P 22 shadowsocks.tar.gz version admin@192.168.50.110:/volume1/docker/nginx/home/
     git add .
