@@ -1298,10 +1298,10 @@ disable_ss(){
 	dbus set dns2socks=0
 	nvram commit
 	restore_conf
-	echo_date 独立开启自定义dnsmasq 开关 $ss_dnsmasq_enable
 	if [ "$ss_dnsmasq_enable" == "1" ];then
 		echo_date 独立开启自定义dnsmasq
 		custom_dnsmasq
+		ln_conf
 	fi
 	restart_dnsmasq
 	flush_nat
