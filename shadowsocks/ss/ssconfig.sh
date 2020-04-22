@@ -580,35 +580,37 @@ ln_conf(){
 		#echo_date 创建域自定义dnsmasq配置文件软链接到/jffs/configs/dnsmasq.d/custom.conf
 		ln -sf /tmp/custom.conf /jffs/configs/dnsmasq.d/custom.conf
 	fi
-	
-	# custom dnsmasq
-	rm -rf /jffs/configs/dnsmasq.d/wblist.conf
-	if [ -f /tmp/wblist.conf ];then
-		#echo_date 创建域名黑/白名单软链接到/jffs/configs/dnsmasq.d/wblist.conf
-		mv -f /tmp/wblist.conf /jffs/configs/dnsmasq.d/wblist.conf
-	fi
-	rm -rf /jffs/configs/dnsmasq.d/cdn.conf
-	if [ -f /tmp/sscdn.conf ];then
-		#echo_date 创建cdn加速列表软链接/jffs/configs/dnsmasq.d/cdn.conf
-		mv -f /tmp/sscdn.conf /jffs/configs/dnsmasq.d/cdn.conf
-	fi
+	if [ "$ss_basic_enable" == "1" ];then
+		# custom dnsmasq
+		rm -rf /jffs/configs/dnsmasq.d/wblist.conf
+		if [ -f /tmp/wblist.conf ];then
+			#echo_date 创建域名黑/白名单软链接到/jffs/configs/dnsmasq.d/wblist.conf
+			mv -f /tmp/wblist.conf /jffs/configs/dnsmasq.d/wblist.conf
+		fi
+		rm -rf /jffs/configs/dnsmasq.d/cdn.conf
+		if [ -f /tmp/sscdn.conf ];then
+			#echo_date 创建cdn加速列表软链接/jffs/configs/dnsmasq.d/cdn.conf
+			mv -f /tmp/sscdn.conf /jffs/configs/dnsmasq.d/cdn.conf
+		fi
 
-	gfw_on=`dbus list ss_acl_mode_|cut -d "=" -f 2 | grep 1`
-	chn_on=`dbus list ss_acl_mode_|cut -d "=" -f 2 | grep -E "2|3"`
-	rm -rf /jffs/configs/dnsmasq.d/gfwlist.conf
-	if [ "$ss_basic_mode" == "1" ];then
-		echo_date 创建gfwlist的软连接到/jffs/etc/dnsmasq.d/文件夹.
-		ln -sf /koolshare/ss/rules/gfwlist.conf /jffs/configs/dnsmasq.d/gfwlist.conf
-	elif [ "$ss_basic_mode" == "2" ] || [ "$ss_basic_mode" == "3" ];then
-		if [ ! -f /jffs/configs/dnsmasq.d/gfwlist.conf ] && [ -n "$gfw_on" ];then
+		gfw_on=`dbus list ss_acl_mode_|cut -d "=" -f 2 | grep 1`
+		chn_on=`dbus list ss_acl_mode_|cut -d "=" -f 2 | grep -E "2|3"`
+		rm -rf /jffs/configs/dnsmasq.d/gfwlist.conf
+
+		if [ "$ss_basic_mode" == "1" ];then
 			echo_date 创建gfwlist的软连接到/jffs/etc/dnsmasq.d/文件夹.
 			ln -sf /koolshare/ss/rules/gfwlist.conf /jffs/configs/dnsmasq.d/gfwlist.conf
+		elif [ "$ss_basic_mode" == "2" ] || [ "$ss_basic_mode" == "3" ];then
+			if [ ! -f /jffs/configs/dnsmasq.d/gfwlist.conf ] && [ -n "$gfw_on" ];then
+				echo_date 创建gfwlist的软连接到/jffs/etc/dnsmasq.d/文件夹.
+				ln -sf /koolshare/ss/rules/gfwlist.conf /jffs/configs/dnsmasq.d/gfwlist.conf
+			fi
 		fi
-	fi
 
-	#echo_date 创建dnsmasq.postconf软连接到/jffs/scripts/文件夹.
-	rm -rf /jffs/scripts/dnsmasq.postconf
-	ln -sf /koolshare/ss/rules/dnsmasq.postconf /jffs/scripts/dnsmasq.postconf
+		#echo_date 创建dnsmasq.postconf软连接到/jffs/scripts/文件夹.
+		rm -rf /jffs/scripts/dnsmasq.postconf
+		ln -sf /koolshare/ss/rules/dnsmasq.postconf /jffs/scripts/dnsmasq.postconf
+	fi	
 }
 	
 
