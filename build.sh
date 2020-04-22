@@ -14,7 +14,7 @@ if [ -d "shadowsocks" ];then
     cat version_bak >> version
     rm version_bak
     cp ${file_name} shadowsocks.tar.gz
-    rm -rf shadowsocks
+    # rm -rf shadowsocks
 else
 echo "仅更新脚本和说明"
 fi
